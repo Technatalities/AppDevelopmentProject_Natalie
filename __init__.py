@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
+
+import Cart
 from cartFunctions import StockValidate, PaymentForm
 import shelve
 from Cart import *
+from Cart_Form import *
 
 app = Flask(__name__)
 app.debug = True
@@ -21,10 +24,13 @@ def display_cart():
 @app.route('/addCart/<str:id>', methods = ["POST"])
 def add_to_cart():
     quantity_form = QuantityForm(request.form)
+    quantity = quantity_form.quantity.data
     product_key = str(id)
     product_db = shelve.open("products.db", flag = "r")
     item = get_product(product_key)
 
+    CartItem = Cart.CartItem(item, quantity)
+    Cart.set_item(cartItem=CartItem)
     cart_dict = {}
     db = shelve.open('cart.db', 'c')
     try:

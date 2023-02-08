@@ -39,3 +39,4 @@ class CreateProductForm(Form):
     rating = RadioField('Rating', choices=[('5', '5'), ('4', '4'), ('3', '3'), ('2', '2'), ('1', '1')], default='5')
     picture = TextAreaField('Picture', [validators.Optional()])
     # picture = FileField('Picture', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'Images only!'])])
+
