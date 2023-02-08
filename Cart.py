@@ -54,6 +54,8 @@ class CartItem:
 
     def add_count(self):
         self.__quantity = self.__quantity + 1
+    def sub_count(self):
+        self.__quantity = self.__quantity - 1
 
 
 carts = shelve.open('cart')
