@@ -3,6 +3,22 @@
 
 {% block content %}
 <h1 class="display-4">Home</h1>
-<p>Hello world!</p>
-{% endblock %}
+<table class="table table-striped">
 
+
+    <tr>
+        <td>name</td>
+        <td>quantity</td>
+        <td> </td>
+    </tr>
+
+    {% for product in products %}
+    <tr>
+        <td>{{ product.get_name() }}</td>
+        <td>{{ product.get_stock() }}</td>
+        <td><a href="/add_cart/{{product.get_product_id()}}"> Add to Card </a></td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

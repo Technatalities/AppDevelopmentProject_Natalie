@@ -7,55 +7,29 @@ app.debug = True
 
 @app.route('/')
 def home():
-    with shelve.open('product.db') as db:
-        db2 = db['Product']
-        print(db2)
-    return render_template('home.html')
+    # this creates 5 dummy product
+    init_products()
+    # this is to clear cart
+    clear_cart()
+    product_list = get_products()
+    return render_template('home.html', products = product_list)
+
+@app.route('/add_cart/<string:id>')
+def add_cart(id):
+    cart = get_cart('xxx')
+    product = get_product(id)
+    cart.add_item(product)
+    save_cart(cart)
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+
 
 @app.route('/displayCart/<int:id>', methods = ["POST"])
-def display_cart():
+def display_cart(id):
     cart_id = id
-    cart_db = shelve.open('shopping_cart.db', 'c')
-    print(cart_db)
-    item_list = Cart.get_items(cart_db(id))
-    return render_template('displayCart.html', count=len(item_list), item_list = item_list)
+    db = shelve.open("cart.db", flag='r')
+    items_list = db[cart_id]
+    return render_template('displayCart.html', count=len(items_list), item_list=items_list)
 
-@app.route('/addCart/<id>', methods = ["GET", "POST"])
-def add_to_cart():
-    quantity_form = QuantityForm(request.form)
-    quantity = quantity_form.quantity.data
-    product_key = str(id)
-    product_db = shelve.open("products.db", flag="r")
-    Cart.product = product_db['product_key']
-
-    item = get_product(product_key)
-
-    cartItem = CartItem(item, quantity)
-    Cart.set_item(cartItem=cartItem)
-
-
-
-# @app.route('/add_to_cart', methods=['POST'])
-# def add_to_cart():
-#     product_key = request.form.get("product_key")
-#     db = shelve.open("products.db", flag='r')
-#     product = get_product(product_key)
-#     if product_key in db:
-#         product = db[product_key]
-#     id = "123"
-#     cart = get_cart(id)
-#     cart = cart_db['Cart']
-#     if product['key'] in cart:
-#         cart[product['key']]['quantity'] += 1
-#     else:
-#         cart[product['key']] = {'name': product['name'], 'category': product['category'], 'price': product['price'], 'quantity': 1}
-#         cart_db['Cart'] = cart
-#         cart_db.close()
-#         db.close()
-#         return "Product added to cart successfully"
-#     else:
-#         db.close()
-#         return "Error: Invalid product key"
 
 
 # @app.route('/displayCart', methods=['GET', 'POST'])

@@ -6,14 +6,9 @@
 <div>
   {% if count == 0 %}
   <p>There are no products in your cart.</p>
-  <p> Browse our Catalouges to add items. </p>
-  {% elif count == 1 %}
-  <p>There is 1 Product in your cart.</p>
+  <p> Browse our catalog to add items. </p>
   {% else %}
   <p>There are {{ count }} Products in your Cart.</p>
-  {% endif %}
-</div>
-<div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -25,33 +20,20 @@
       </tr>
     </thead>
     <tbody>
-      {% for cart in cart_list %}
+      {% for item in cart.get_items() %}
         <tr>
-            <td>{{ cart.get_name() }}</td>
+            <td>{{ item.get_product().get_name() }}</td>
             <td>
-                <form action="" method="POST">
-                    <a href="{{url_for('subtract_quantity', id = cart.get_cart_id())}}">
-                        <input value="-" class = "btn btn-primary btn-sm">
-                    </a>
-                </form>
-                {{cart.get_quantity() }}
-                <form action="" method="POST">
-                    <a href="{{url_for('subtract_quantity', id = cart.get_cart_id())}}">
-                        <input value="+" class = "btn btn-primary btn-sm">
-                    </a>
-                </form>
+                {{item.get_quantity() }}
             </td>
-            <td> {{ cart.get_price() }}</td>
+            <td> {{ item.get_product().get_price() }}</td>
             <td>
-            <form action="" method="POST">
-                <a href="{{url_for('remove_from_cart', id = cart.get_cart_id())}}">
-                    <input value="Remove from Cart" class="btn btn-danger">
-                </a>
-            </form>
+
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+    {% endif %}
 </div>
 {% endblock %}
