@@ -1,16 +1,16 @@
 class Product:
-    count_id = 0
-    # UID a bit off, every restart will overide and fail.
-    def __init__(self, name, stock, category, price, rating, picture):
-        Product.count_id += 1
-        self.__product_id = Product.count_id
+    #count_id = 0
+
+    def __init__(self, count_id, name, stock, category, price, rating, picture):
+        #Product.count_id += 1
+        #self.__product_id = Product.count_id
+        self.__product_id = count_id
         self.__name = name
         self.__stock = stock
         self.__category = category
         self.__price = price
         self.__rating = rating
         self.__picture = picture
-
 
     def get_product_id(self):
         return self.__product_id

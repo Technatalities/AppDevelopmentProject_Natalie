@@ -1,8 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-
-import Cart
-from cartFunctions import StockValidate, PaymentForm
-import shelve
 from Cart import *
 from Cart_Form import *
 
@@ -18,25 +14,23 @@ def home():
 
 @app.route('/displayCart', methods = ["POST"])
 def display_cart():
+    cart_db = shelve.open('shopping_cart.db', 'c')
+    print(cart_db)
     item_list = Cart.get_items()
     return render_template('displayCart.html', count=len(item_list), item_list = item_list)
 
-@app.route('/addCart/<str:id>', methods = ["POST"])
+@app.route('/addCart', methods = ["GET", "POST"])
 def add_to_cart():
     quantity_form = QuantityForm(request.form)
     quantity = quantity_form.quantity.data
     product_key = str(id)
     product_db = shelve.open("products.db", flag = "r")
+    Cart.product = product_db['product_key']
+
     item = get_product(product_key)
 
-    CartItem = Cart.CartItem(item, quantity)
-    Cart.set_item(cartItem=CartItem)
-    cart_dict = {}
-    db = shelve.open('cart.db', 'c')
-    try:
-        cart_dict = db['Users']
-    except:
-        print("Error adding to Cart")
+    cartItem = Cart.CartItem(item, quantity)
+    Cart.set_item(cartItem=cartItem)
 
 
 
@@ -46,7 +40,7 @@ def add_to_cart():
 #     db = shelve.open("products.db", flag='r')
 #     product = get_product(product_key)
 #     if product_key in db:
-#         product = db[product_key]\
+#         product = db[product_key]
 #     id = "123"
 #     cart = get_cart(id)
 #     cart = cart_db['Cart']
