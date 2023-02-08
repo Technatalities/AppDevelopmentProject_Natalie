@@ -10,6 +10,5 @@ def validate_quantity_warning(form, field):
     if field.data <= 0:
         raise ValidationError("Quantity cannot be less than 1.")
 class QuantityForm(Form):
-    quantity = IntegerField('Quantity', [validators.DataRequired()])
-    stock = IntegerField('Stock', validators=[validate_quantity(1, 50), validators.DataRequired(),
+    quantity = IntegerField('Quantity', validators=[validate_quantity(1, 50), validators.DataRequired(),
                                               validate_quantity_warning])

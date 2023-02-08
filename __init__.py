@@ -12,24 +12,25 @@ def home():
         print(db2)
     return render_template('home.html')
 
-@app.route('/displayCart', methods = ["POST"])
+@app.route('/displayCart/<int:id>', methods = ["POST"])
 def display_cart():
+    cart_id = id
     cart_db = shelve.open('shopping_cart.db', 'c')
     print(cart_db)
-    item_list = Cart.get_items()
+    item_list = Cart.get_items(cart_db(id))
     return render_template('displayCart.html', count=len(item_list), item_list = item_list)
 
-@app.route('/addCart', methods = ["GET", "POST"])
+@app.route('/addCart/<id>', methods = ["GET", "POST"])
 def add_to_cart():
     quantity_form = QuantityForm(request.form)
     quantity = quantity_form.quantity.data
     product_key = str(id)
-    product_db = shelve.open("products.db", flag = "r")
+    product_db = shelve.open("products.db", flag="r")
     Cart.product = product_db['product_key']
 
     item = get_product(product_key)
 
-    cartItem = Cart.CartItem(item, quantity)
+    cartItem = CartItem(item, quantity)
     Cart.set_item(cartItem=cartItem)
 
 
