@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from Cart import *
+from Wishlist import *
 from Cart_Form import *
 
 app = Flask(__name__)
@@ -7,10 +8,8 @@ app.debug = True
 
 @app.route('/')
 def home():
-    # this creates 5 dummy product
-    init_products()
-    # this is to clear cart
-    clear_cart()
+    init_products()  # this creates 5 dummy product
+    clear_cart()  # this is to clear cart
     product_list = get_products()
     return render_template('home.html', products=product_list)
 
@@ -48,6 +47,18 @@ def remove_from_cart(id):
     cart = get_cart("xxx")
     product = get_product(id)
 
+@app.route('/displayWishlist/<string:id>')
+def display_wishlist(id):
+    wishlist = get_wishlist('xxx')
+    return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
+
+@app.route('/add_wishlist/<string:id>')
+def add_wishlist(id):
+    wishlist = get_wishlist('xxx')
+    product = get_product(id)
+    wishlist.add_item(product)
+    save_wishlist(wishlist)
+    return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
 
 # @app.route('/displayCart', methods=['GET', 'POST'])
 # def display_cart():
