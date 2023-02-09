@@ -43,6 +43,12 @@ def sub_quantity(id):
     save_cart(cart)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
+@app.route('/remove_from_cart/<string:id>')
+def remove_from_cart(id):
+    cart = get_cart("xxx")
+    product = get_product(id)
+
+
 # @app.route('/displayCart', methods=['GET', 'POST'])
 # def display_cart():
 #     cart_db = shelve.open('shopping_cart.db', 'c')
