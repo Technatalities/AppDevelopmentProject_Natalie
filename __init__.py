@@ -19,22 +19,13 @@ def display_cart(id):
     cart = get_cart('xxx')
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
-@app.route('/add_cart/<string:id>', methods=['GET', 'POST'])
+@app.route('/add_cart/<string:id>')
 def add_cart(id):
-    quantity_form = QuantityForm(request.form)
-    quantity = quantity_form.quantity.data
     cart = get_cart('xxx')
     product = get_product(id)
-    found = False
-    for item in cart.__items:
-        if item.get_product().get_product_id() == product.get_product_id():
-            item.add_count()
-            found = True
-    if not found:
-        i = CartItem(product, quantity)
-        cart.__items.append(i)
+    cart.add_item(product)
     save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart, form=quantity_form)
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
 
 
