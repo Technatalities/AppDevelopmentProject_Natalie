@@ -75,6 +75,8 @@ class CartItem:
         self.__quantity = self.__quantity - 1
 
 
+
+
 carts = shelve.open('cart')
 def get_cart(id):
     if id in carts:
@@ -83,6 +85,7 @@ def get_cart(id):
         cart = Cart(id)
         carts[id] = cart
         return cart
+
 
 def delete_cart(id):
     if id in carts:

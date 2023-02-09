@@ -27,6 +27,14 @@ def add_cart(id):
     save_cart(cart)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
+@app.route('/add_quantity/<string:id>')
+def add_quantity(id):
+    cart = get_cart("xxx")
+    product = get_product(id)
+    cart.add_quantity(product)
+    save_cart(cart)
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+
 @app.route('/sub_quantity/<string:id>')
 def sub_quantity(id):
     cart = get_cart("xxx")
