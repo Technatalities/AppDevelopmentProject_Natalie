@@ -4,7 +4,7 @@ import shelve
 class Cart:
     def __init__(self, id):
         self.__id = id
-        self.__items = [] # Contains product IDs and quanitty
+        self.__items = []  # Contains product IDs and quantity
 
     def set_id(self, id):
         self.__id = id
