@@ -1,5 +1,6 @@
 from Product import *
 import shelve
+from Cart_Form import QuantityForm
 
 class Cart:
     def __init__(self, id):
@@ -24,16 +25,15 @@ class Cart:
     def get_count(self):
         return len(self.__items)
 
-    def add_item(self, product):
-        found = False
-        for item in self.__items:
-            if item.get_product().get_product_id() == product.get_product_id():
-                item.add_count()
-                found = True
-        if not found:
-            i = CartItem(product, 1)
-            self.__items.append(i)
-
+    # def add_item(self, product):
+    #     found = False
+    #     for item in self.__items:
+    #         if item.get_product().get_product_id() == product.get_product_id():
+    #             item.add_count()
+    #             found = True
+    #     if not found:
+    #         i = CartItem(product, 1)
+    #         self.__items.append(i)
 
 class CartItem:
     def __init__(self, product, quantity):

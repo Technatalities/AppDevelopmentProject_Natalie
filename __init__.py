@@ -12,20 +12,29 @@ def home():
     # this is to clear cart
     clear_cart()
     product_list = get_products()
-    return render_template('home.html', products = product_list)
+    return render_template('home.html', products=product_list)
 
 @app.route('/displayCart/<string:id>')
 def display_cart(id):
     cart = get_cart('xxx')
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
-@app.route('/add_cart/<string:id>')
+@app.route('/add_cart/<string:id>', methods=['GET', 'POST'])
 def add_cart(id):
+    quantity_form = QuantityForm(request.form)
+    quantity = quantity_form.quantity.data
     cart = get_cart('xxx')
     product = get_product(id)
-    cart.add_item(product)
+    found = False
+    for item in cart.__items:
+        if item.get_product().get_product_id() == product.get_product_id():
+            item.add_count()
+            found = True
+    if not found:
+        i = CartItem(product, quantity)
+        cart.__items.append(i)
     save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart, form=quantity_form)
 
 
 
