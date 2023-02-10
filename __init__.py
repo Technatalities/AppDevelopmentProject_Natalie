@@ -49,7 +49,6 @@ def sub_quantity(id):
     save_cart(cart)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
-
 @app.route('/displayWishlist/<string:id>')
 def display_wishlist(id):
     wishlist = get_wishlist('xxx')
@@ -70,6 +69,7 @@ def remove_from_wishlist(id):
     wishlist.remove_wl_item(product)
     save_wishlist(wishlist)
     return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
+
 # @app.route('/displayCart', methods=['GET', 'POST'])
 # def display_cart():
 #     cart_db = shelve.open('shopping_cart.db', 'c')
