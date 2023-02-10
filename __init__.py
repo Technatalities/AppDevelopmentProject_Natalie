@@ -25,7 +25,8 @@ def add_cart(id):
     product = get_product(id)
     cart.add_item(product)
     save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+    tot_price = cart.calc_total_price()
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart, tot_price=tot_price)
 
 @app.route('/remove_from_cart/<string:id>')
 def remove_from_cart(id):
