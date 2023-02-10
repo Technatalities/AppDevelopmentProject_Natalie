@@ -61,6 +61,13 @@ class Cart:
             if not found:
                 print("Product not found in Cart.")
 
+    def calc_total_price(self):
+        for item in self.__items:
+            total_price = 0
+            total_price += item.get_product().get_price() * item.get_quantity()
+            return total_price
+
+
 
 class CartItem:
     def __init__(self, product, quantity):

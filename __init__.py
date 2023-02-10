@@ -15,7 +15,9 @@ def home():
 @app.route('/displayCart/<string:id>')
 def display_cart(id):
     cart = get_cart('xxx')
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+    tot_price = cart.calc_total_price()
+    print(tot_price)
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart, tot_price=tot_price)
 
 @app.route('/add_cart/<string:id>')
 def add_cart(id):
