@@ -25,6 +25,14 @@ def add_cart(id):
     save_cart(cart)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
+@app.route('/remove_from_cart/<string:id>')
+def remove_from_cart(id):
+    cart = get_cart("xxx")
+    product = get_product(id)
+    cart.remove_item(product)
+    save_cart(cart)
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+
 @app.route('/add_quantity/<string:id>')
 def add_quantity(id):
     cart = get_cart("xxx")
@@ -38,14 +46,6 @@ def sub_quantity(id):
     cart = get_cart("xxx")
     product = get_product(id)
     cart.sub_quantity(product)
-    save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
-
-@app.route('/remove_from_cart/<string:id>')
-def remove_from_cart(id):
-    cart = get_cart("xxx")
-    product = get_product(id)
-    cart.remove_item(product)
     save_cart(cart)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
@@ -63,6 +63,13 @@ def add_wishlist(id):
     save_wishlist(wishlist)
     return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
 
+@app.route('/remove_from_wishlist/<string:id>')
+def remove_from_wishlist(id):
+    wishlist = get_wishlist("xxx")
+    product = get_product(id)
+    wishlist.remove_wl_item(product)
+    save_wishlist(wishlist)
+    return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
 # @app.route('/displayCart', methods=['GET', 'POST'])
 # def display_cart():
 #     cart_db = shelve.open('shopping_cart.db', 'c')

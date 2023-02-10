@@ -33,6 +33,15 @@ class Wishlist:
             i = WishlistItem(product)
             self.__wl_items.append(i)
 
+    def remove_wl_item(self, product):
+        found = False
+        for wl_item in self.__wl_items:
+            if wl_item.get_product().get_product_id() == product.get_product_id():
+                self.__wl_items.remove(wl_item)
+                found = True
+        if not found:
+            print("Item does not exist in wishlist.")
+
 class WishlistItem:
     def __init__(self, product):
         self.__product = product

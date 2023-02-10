@@ -38,9 +38,7 @@ class Cart:
         found = False
         for item in self.__items:
             if item.get_product().get_product_id() == product.get_product_id():
-                i = item.get_product(), item.get_quantity()
-                list_index = self.__items.index(i)
-                self.__items.pop(list_index)
+                self.__items.remove(item)
                 found = True
         if not found:
             print("Item does not exist in cart.")
