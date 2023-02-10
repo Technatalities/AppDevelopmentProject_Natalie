@@ -34,6 +34,16 @@ class Cart:
             i = CartItem(product, 1)
             self.__items.append(i)
 
+    def remove_item(self, product):
+        found = False
+        for item in self.__items:
+            if item.get_product().get_product_id() == product.get_product_id():
+                i = CartItem
+                self.__items.pop(i)
+                found = True
+        if not found:
+            print("Item does not exist in cart.")
+
     def add_quantity(self, product):
         found = False
         for item in self.__items:
@@ -51,6 +61,7 @@ class Cart:
                 found = True
             if not found:
                 print("Product not found in Cart.")
+
 
 class CartItem:
     def __init__(self, product, quantity):

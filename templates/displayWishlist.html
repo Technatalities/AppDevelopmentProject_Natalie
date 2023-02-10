@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Suply Walrus - Cart Display{% endblock %}
+
+{% block content %}
+<h1 class="display-4">Wishlist</h1>
+<div>
+  {% if count == 0 %}
+  <p>There are no products in your wishlist.</p>
+  <p> Browse our catalog to add items. </p>
+  {% else %}
+  <p> You have {{ count }} Wishlisted items.</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for wl_item in wishlist.get_wl_items() %}
+        <tr>
+            <td>{{ wl_item.get_product().get_name() }}</td>
+            <td> {{ wl_item.get_product().get_price() }}</td>
+            <td>
+
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    {% endif %}
+</div>
+{% endblock %}

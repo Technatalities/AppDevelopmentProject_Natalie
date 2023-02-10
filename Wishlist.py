@@ -64,4 +64,4 @@ def clear_wishlist():
 def save_wishlist(wishlist):
     wishlists[wishlist.get_id()] = wishlist
     print(wishlist.get_id())
-    print(wishlist.get_items())
+    print(wishlist.get_wl_items())
