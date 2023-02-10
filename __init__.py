@@ -13,7 +13,7 @@ def home():
     return render_template('home.html', products=product_list)
 
 @app.route('/displayCart/<string:id>')
-def display_cart(id):
+def display_cart(user_id):
     cart = get_cart('xxx')
     tot_price = cart.calc_total_price()
     print(tot_price)
@@ -26,7 +26,7 @@ def add_cart(id):
     cart.add_item(product)
     save_cart(cart)
     tot_price = cart.calc_total_price()
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart, tot_price=tot_price)
+    return redirect(url_for('display_cart', id="xxx"))
 
 @app.route('/remove_from_cart/<string:id>')
 def remove_from_cart(id):
@@ -34,7 +34,7 @@ def remove_from_cart(id):
     product = get_product(id)
     cart.remove_item(product)
     save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+    return redirect(url_for('display_cart', id="xxx"))
 
 @app.route('/add_quantity/<string:id>')
 def add_quantity(id):
@@ -42,7 +42,7 @@ def add_quantity(id):
     product = get_product(id)
     cart.add_quantity(product)
     save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+    return redirect(url_for('display_cart', id="xxx"))
 
 @app.route('/sub_quantity/<string:id>')
 def sub_quantity(id):
@@ -50,7 +50,7 @@ def sub_quantity(id):
     product = get_product(id)
     cart.sub_quantity(product)
     save_cart(cart)
-    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+    return redirect(url_for('display_cart', id="xxx"))
 
 @app.route('/displayWishlist/<string:id>')
 def display_wishlist(id):
