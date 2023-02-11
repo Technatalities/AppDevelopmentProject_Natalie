@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from Cart import *
 from Wishlist import *
 from Receipt import *
-from PaymentForm import PaymentForm
+from PaymentForm import *
 from PaymentInfo import *
 
 app = Flask(__name__)
@@ -28,6 +28,12 @@ def display_cart(id):
     save_receipt(receipt)
     tot_price = cart.calc_total_price()
     return render_template('displayCart.html', count=cart.get_count(), cart=cart, tot_price=tot_price)
+
+
+@app.route('/clear_cart')
+def clear_cart():
+    delete_cart('xxx')
+    return redirect(url_for('display_cart', id="xxx"))
 
 
 @app.route('/add_cart/<string:id>')
@@ -66,10 +72,29 @@ def sub_quantity(id):
     return redirect(url_for('display_cart', id="xxx"))
 
 
+@app.route('/transfer_to_wishlist/<string:id>')
+def transfer_to_wishlist(id):
+    wishlist = get_wishlist("xxx")
+    cart = get_cart("xxx")
+    product = get_product(id)
+    cart.remove_item(product)
+    wishlist.add_wl_item(product)
+    save_wishlist(wishlist)
+    save_cart(cart)
+    return redirect(url_for('display_wishlist', id="xxx"))
+
+
 @app.route('/displayWishlist/<string:id>')
 def display_wishlist(id):
     wishlist = get_wishlist('xxx')
     return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
+
+
+@app.route('/clear_wishlist')
+def clear_wishlist():
+    delete_wishlist('xxx')
+    return redirect(url_for('display_wishlist', id="xxx"))
+
 
 @app.route('/add_wishlist/<string:id>')
 def add_wishlist(id):
@@ -103,17 +128,17 @@ def transfer_to_cart(id):
 
 @app.route('/makePayment', methods=['GET', 'POST'])
 def create_payment():
-    payment_form = PaymentForm(request.form)
+    payment_form = MakePaymentForm(request.form)
     if request.method == 'POST' and payment_form.validate():
         payment_info_dict = {}
         db = shelve.open('payment_info.db', 'c')
+
         try:
             payment_info_dict = db['PaymentInfo']
-            payment_id = PaymentInfo.get_payment_id
         except:
             print("Error in retreiving Database.")
 
-        payment_info = PaymentInfo(payment_id, payment_form.first_name.data,
+        payment_info = PaymentInfo(payment_form.first_name.data,
                                    payment_form.last_name.data,
                                    payment_form.email.data, payment_form.card_no.data,
                                    payment_form.cvv.data, payment_form.expiry_date.data)

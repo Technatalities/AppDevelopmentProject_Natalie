@@ -9,7 +9,7 @@
   <p> Browse our catalog to add items. </p>
   {% else %}
   <p>There are {{ count }} Products in your Cart.</p>
-  <table class="table table-striped">
+  <table class="table table-hover">
     <thead>
       <tr>
           <th>Name</th>
@@ -17,24 +17,30 @@
           <th>Price</th>
           <th></th>
           <th></th>
-          <th></th>
+          <th><a class="btn btn-danger btn-sm" href="/clear_cart" role="button"> Clear Cart</a></th>
       </tr>
     </thead>
     <tbody>
       {% for item in cart.get_items() %}
-        <tr>
+        <tr class="table-info">
             <td>{{ item.get_product().get_name() }}</td>
             <td>
-                <a class="btn btn-primary" href="/sub_quantity/{{item.get_product().get_product_id()}}" role="button">-</a>
-                {{item.get_quantity() }}
-                <a class="btn btn-primary" href="/add_quantity/{{item.get_product().get_product_id()}}" role="button">+</a>
+                <a class="btn btn-primary btn-sm" href="/sub_quantity/{{item.get_product().get_product_id()}}" role="button">-</a>
+                     {{item.get_quantity() }}
+                <a class="btn btn-primary btn-sm" href="/add_quantity/{{item.get_product().get_product_id()}}" role="button">+</a>
             </td>
             <td> ${{ item.get_product().get_price() }}</td>
-            <td> <a class="btn btn-danger" href="/remove_from_cart/{{item.get_product().get_product_id()}}" role="button"> Remove </a></td>
+            <td></td>
+            <td><a class="btn btn-warning btn-sm" href="/transfer_to_wishlist/{{item.get_product().get_product_id()}}" role="button">Transfer to Wishlist</a></td>
+            <td><a class="btn btn-danger" href="/remove_from_cart/{{item.get_product().get_product_id()}}" role="button"> Remove </a></td>
         </tr>
 
         <tr>
             <td> Total Price: {{ tot_price }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td><a class="btn btn-success" href="/makePayment" role="button"> CheckOut</a></td>
           </tr>
       {% endfor %}

@@ -120,7 +120,6 @@ def clear_cart():
     for i in list:
         del carts[i]
 
-
 def save_cart(cart):
     carts[cart.get_id()] = cart
     print(cart.get_id())
