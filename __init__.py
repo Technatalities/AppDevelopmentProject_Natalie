@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 import PaymentInfoData
+import PaymentItems
 from Cart import *
 from Wishlist import *
 from PaymentForm import *
 from PaymentInfoData import *
+from PaymentItems import *
 
 app = Flask(__name__)
 app.debug = True
@@ -17,7 +19,7 @@ def home():
     return render_template('home.html', products=product_list)
 
 @app.route('/displayCart/<string:id>')
-def display_cart(user_id):
+def display_cart(id):
     cart = get_cart('xxx')
     tot_price = cart.calc_total_price()
     print(tot_price)
@@ -103,8 +105,9 @@ def create_payment():
                                                        create_payment_form.cvv.data, create_payment_form.expiry_date.data)
         payment_info_dict[payment_info.get_payment_id()] = payment_info
         db['PaymentInfo'] = payment_info_dict
-        db.close
--------------------------------------------
+        db.close()
+        return redirect(url_for('display_cart'))
+    return render_template('PaymentForm.html', form=create_payment_form)
 
 
 # @app.route('/invoice', methods=['GET', 'POST'])

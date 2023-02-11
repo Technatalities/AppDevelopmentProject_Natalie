@@ -54,6 +54,10 @@ class Cart:
     def sub_quantity(self, product):
         found = False
         for item in self.__items:
+            if item.get_quantity() == 1:
+                if item.get_product().get_product_id() == product.get_product_id():
+                    self.__items.remove(item)
+                    found = True
             if item.get_product().get_product_id() == product.get_product_id():
                 item.sub_count()
                 found = True
