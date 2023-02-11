@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from Cart import *
 from Wishlist import *
+from Receipt import *
 from PaymentForm import *
 from PaymentInfo import *
 
@@ -19,10 +20,12 @@ def home():
 @app.route('/displayCart/<string:id>')
 def display_cart(id):
     cart = get_cart('xxx')
+    receipt = get_receipt('xxx')
+    receipt.add_to_receipt(cart.get_items())
+    receipt.add_to_receipt_history(receipt.get_receipt())
+    save_receipt(receipt)
     tot_price = cart.calc_total_price()
-    print(tot_price)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart, tot_price=tot_price)
-
 
 @app.route('/add_cart/<string:id>')
 def add_cart(id):
@@ -31,7 +34,6 @@ def add_cart(id):
     cart.add_item(product)
     save_cart(cart)
     return redirect(url_for('display_cart', id="xxx"))
-
 
 @app.route('/remove_from_cart/<string:id>')
 def remove_from_cart(id):

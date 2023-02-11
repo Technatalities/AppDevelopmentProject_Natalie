@@ -64,4 +64,5 @@ def get_receipt(id):
 def save_receipt(receipt):
     receipts[receipt.get_id()] = receipt
     print(receipt.get_id())
-    print(receipt.get_items())
+    print(receipt.get_receipt())
+    print(receipt.get_receipt_history())
