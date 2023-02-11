@@ -5,8 +5,8 @@
 {% from "includes/_formHelper.html" import render_field %}
 
 <h1 class="display-4">Make Payment</h1>
-  <div class="d-flex justify-content-center" style="width: 75vw;background-color:rgb(232, 241, 255)">
-      <table class="table table-hover">
+  <div class="d-flex justify-content-center">
+      <table class="table table-hover" style="width: 80vw;background-color:rgb(232, 241, 255)">
         <thead>
           <tr>
               <th>Name</th>
@@ -24,8 +24,8 @@
 
             <tr>
                 <th> Total Price:</th>
-                <td>${{ tot_price }}</td>
                 <td></td>
+                <td>${{ tot_price }}</td>
               </tr>
           {% endfor %}
         </tbody>
