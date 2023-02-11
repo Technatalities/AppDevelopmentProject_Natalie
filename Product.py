@@ -83,5 +83,5 @@ def clear_products():
 def init_products():
     clear_products()
     for i in range(1,5):
-        p = Product("p"+str(i), 10, "cat"+str(i), 1+i, 5, "")
+        p = Product("p"+str(i), 10, "cat"+str(i), 1.5+i, 5, "")
         create_product(p)

@@ -28,7 +28,7 @@
                 {{item.get_quantity() }}
                 <a href="/add_quantity/{{item.get_product().get_product_id()}}">+</a>
             </td>
-            <td> {{ item.get_product().get_price() }}</td>
+            <td> ${{ item.get_product().get_price() }}</td>
             <td> <a href="/remove_from_cart/{{item.get_product().get_product_id()}}"> Remove </a></td>
         </tr>
 
