@@ -79,8 +79,8 @@ def clear_products():
     for i in key_list:
         del products[i]
 
-# created dummy products for testing
 def init_products():
+    clear_products()
     for i in range(1,5):
         p = Product("p"+str(i), 10, "cat"+str(i), 1.5+i, 5, "")
         create_product(p)

@@ -9,26 +9,28 @@
   <p> Browse our catalog to add items. </p>
   {% else %}
   <p> You have {{ count }} Wishlisted items.</p>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th></th>
-        <th><a class="btn btn-danger btn-sm" href="/clear_wishlist" role="button">Clear Wishlist</a></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for wl_item in wishlist.get_wl_items() %}
-        <tr class="table-warning">
-            <td>{{ wl_item.get_product().get_name() }}</td>
-            <td> {{ wl_item.get_product().get_price() }}</td>
-            <td> <a class="btn btn-info btn-sm" href="/transfer_to_cart/{{wl_item.get_product().get_product_id()}}" role="button"> Transfer to Cart </a></td>
-            <td> <a class="btn btn-danger" href="/remove_from_wishlist/{{wl_item.get_product().get_product_id()}}" role="button"> Remove </a></td>
+
+  <div class="d-flex justify-content-center">
+    <table class="table table-hover" style="width: 75vw;background-color:rgb(232, 241, 255)">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th></th>
+          <th><a class="btn btn-danger btn-sm" href="/clear_wishlist" role="button">Clear Wishlist</a></th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for wl_item in wishlist.get_wl_items() %}
+          <tr class="table-warning">
+              <td>{{ wl_item.get_product().get_name() }}</td>
+              <td> {{ wl_item.get_product().get_price() }}</td>
+              <td> <a class="btn btn-info btn-sm" href="/transfer_to_cart/{{wl_item.get_product().get_product_id()}}" role="button"> Transfer to Cart </a></td>
+              <td> <a class="btn btn-danger" href="/remove_from_wishlist/{{wl_item.get_product().get_product_id()}}" role="button"> Remove </a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% endif %}
 </div>
 {% endblock %}

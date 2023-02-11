@@ -111,10 +111,6 @@ def delete_cart(id):
     if id in carts:
         del carts[id]
 
-
-# def del_cart(cart):
-#     carts[cart.get_id()] = cart
-
 def clear_cart():
     list = carts.keys()
     for i in list:
