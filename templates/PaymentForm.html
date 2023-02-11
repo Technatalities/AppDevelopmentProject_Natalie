@@ -5,6 +5,30 @@
 {% from "includes/_formHelper.html" import render_field %}
 
 <h1 class="display-4">Make Payment</h1>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart.get_items() %}
+        <tr class="table-success">
+            <td>{{ item.get_product().get_name() }}</td>
+            <td>{{item.get_quantity() }}</td>
+            <td> ${{ item.get_product().get_price() }}</td>
+        </tr>
+
+        <tr>
+            <td> Total Price: {{ tot_price }}</td>
+            <td></td>
+            <td></td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 <form method="POST" action="">
     <div class="form-group">

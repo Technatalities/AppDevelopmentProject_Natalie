@@ -40,6 +40,12 @@ class Receipt:
         i = ReceiptItem(items)
         self.__receipt_history.append(i)
 
+    def calc_tot_price(self):
+        for receipt_item in self.__receipt:
+            tot_price = 0
+            tot_price += receipt_item.get_price() * receipt_item.get_quantity()
+            return tot_price
+
 
 class ReceiptItem:
     def __init__(self, items):

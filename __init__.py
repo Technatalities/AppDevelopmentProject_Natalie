@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
+from Product import *
 from Cart import *
 from Wishlist import *
 from Receipt import *
@@ -128,6 +129,16 @@ def transfer_to_cart(id):
 
 @app.route('/makePayment', methods=['GET', 'POST'])
 def create_payment():
+    cart = get_cart('xxx')
+    tot_price = cart.calc_total_price()
+    for item in cart.get_items():
+        product_id = item.get_product().get_product_id()
+        product = get_product(product_id)
+        old_stock = item.get_product().get_stock()
+        quantity = item.get_quantity()
+        new_stock = int(old_stock) - int(quantity)
+        product.set_stock(new_stock)
+        print(new_stock)
     payment_form = MakePaymentForm(request.form)
     if request.method == 'POST' and payment_form.validate():
         payment_dict = {}
@@ -140,9 +151,10 @@ def create_payment():
         payment_dict[payment_info.get_payment_id()] = payment_info
         db['Payment'] = payment_dict
         db.close()
+        clear_cart()
+        clear_receipt()
         return redirect(url_for('home'))
-    return render_template('PaymentForm.html', form=payment_form)
-
+    return render_template('PaymentForm.html', form=payment_form, cart=cart, tot_price=tot_price)
 
 if __name__ == '__main__':
     app.run()
