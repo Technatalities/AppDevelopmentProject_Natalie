@@ -2,55 +2,53 @@
 {% block title %}Supply Walrus - Cart Display{% endblock %}
 
 {% block content %}
+<h1 class="display-4 text-center">Cart</h1>
 <div>
-    <h1 class="display-4 text-center">Cart</h1>
-    <div>
-        {% if count == 0 %}
-        <p class="text-center">There are no products in your cart.</p>
-        <p class="text-center"> Browse our catalog to add items. </p>
-        {% else %}
-        <p class="text-center">There are {{ count }} Products in your Cart.</p>
+    {% if count == 0 %}
+    <p class="text-center">There are no products in your cart.</p>
+    <p class="text-center"> Browse our catalog to add items. </p>
+    {% else %}
+    <p class="text-center">There are {{ count }} Products in your Cart.</p>
 
-        <div class="d-flex justify-content-center">
-            <table class="table table-hover" style="width: 80vw;background-color:rgb(232, 241, 255)">
-            <thead>
-              <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th></th>
-                  <th></th>
-                  <th><a class="btn btn-danger btn-sm" href="/clear_cart" role="button"> Clear Cart</a></th>
+    <div class="d-flex justify-content-center">
+        <table class="table table-hover" style="width: 80vw;background-color:rgb(232, 241, 255)">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th></th>
+              <th></th>
+              <th><a class="btn btn-danger btn-sm" href="/clear_cart" role="button"> Clear Cart</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart.get_items() %}
+            <tr class="table-info">
+                <td>{{ item.get_product().get_name() }}</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/sub_quantity/{{item.get_product().get_product_id()}}" role="button">-</a>
+                         {{item.get_quantity() }}
+                    <a class="btn btn-primary btn-sm" href="/add_quantity/{{item.get_product().get_product_id()}}" role="button">+</a>
+                </td>
+                <td> ${{ item.get_product().get_price() }}</td>
+                <td></td>
+                <td><a class="btn btn-warning btn-sm" href="/transfer_to_wishlist/{{item.get_product().get_product_id()}}" role="button">Transfer to Wishlist</a></td>
+                <td><a class="btn btn-danger" href="/remove_from_cart/{{item.get_product().get_product_id()}}" role="button"> Remove </a></td>
+            </tr>
+
+            <tr>
+                <th> Total Price:</th>
+                <td></td>
+                <td>${{ tot_price }}</td>
+                <td></td>
+                <td></td>
+                <td><a class="btn btn-success" href="/makePayment" role="button"> Check Out</a></td>
               </tr>
-            </thead>
-            <tbody>
-              {% for item in cart.get_items() %}
-                <tr class="table-info">
-                    <td>{{ item.get_product().get_name() }}</td>
-                    <td>
-                        <a class="btn btn-primary btn-sm" href="/sub_quantity/{{item.get_product().get_product_id()}}" role="button">-</a>
-                             {{item.get_quantity() }}
-                        <a class="btn btn-primary btn-sm" href="/add_quantity/{{item.get_product().get_product_id()}}" role="button">+</a>
-                    </td>
-                    <td> ${{ item.get_product().get_price() }}</td>
-                    <td></td>
-                    <td><a class="btn btn-warning btn-sm" href="/transfer_to_wishlist/{{item.get_product().get_product_id()}}" role="button">Transfer to Wishlist</a></td>
-                    <td><a class="btn btn-danger" href="/remove_from_cart/{{item.get_product().get_product_id()}}" role="button"> Remove </a></td>
-                </tr>
-
-                <tr>
-                    <th> Total Price:</th>
-                    <td></td>
-                    <td>${{ tot_price }}</td>
-                    <td></td>
-                    <td></td>
-                    <td><a class="btn btn-success" href="/makePayment" role="button"> Check Out</a></td>
-                  </tr>
-              {% endfor %}
-            </tbody>
-            </table>
-        </div>
-        {% endif %}
+          {% endfor %}
+        </tbody>
+        </table>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
