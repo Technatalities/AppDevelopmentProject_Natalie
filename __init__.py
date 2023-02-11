@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
+
+import PaymentInfoData
 from Cart import *
 from Wishlist import *
+from PaymentForm import *
+from PaymentInfoData import *
 
 app = Flask(__name__)
 app.debug = True
@@ -25,7 +29,6 @@ def add_cart(id):
     product = get_product(id)
     cart.add_item(product)
     save_cart(cart)
-    tot_price = cart.calc_total_price()
     return redirect(url_for('display_cart', id="xxx"))
 
 @app.route('/remove_from_cart/<string:id>')
@@ -72,7 +75,38 @@ def remove_from_wishlist(id):
     wishlist.remove_wl_item(product)
     save_wishlist(wishlist)
     return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
-#
+
+@app.route('/transfer_to_cart/<string:id>')
+def transfer_to_cart(id):
+    cart = get_cart("xxx")
+    wishlist = get_wishlist("xxx")
+    product = get_product(id)
+    wishlist.remove_wl_item(product)
+    cart.add_item(product)
+    save_cart(cart)
+    save_wishlist(wishlist)
+    return redirect(url_for('display_cart', id="xxx"))
+
+@app.route('/createPayment', methods=['GET', 'POST'])
+def create_payment():
+    create_payment_form = PaymentForm(request.form)
+    if request.method == 'POST' and create_payment_form.validate():
+        payment_info_dict = {}
+        db = shelve.open('payment_info.db', 'c')
+        try:
+            payment_info_dict = db['PaymentInfo']
+        except:
+            print("Error in retreiving Database.")
+
+        payment_info = PaymentInfoData.PaymentInfoData(create_payment_form.first_name.data, create_payment_form.last_name.data,
+                                                       create_payment_form.email.data, create_payment_form.card_no.data,
+                                                       create_payment_form.cvv.data, create_payment_form.expiry_date.data)
+        payment_info_dict[payment_info.get_payment_id()] = payment_info
+        db['PaymentInfo'] = payment_info_dict
+        db.close
+-------------------------------------------
+
+
 # @app.route('/invoice', methods=['GET', 'POST'])
 # def invoice():
 #     form = PaymentForm()
