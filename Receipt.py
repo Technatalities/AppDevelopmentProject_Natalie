@@ -61,6 +61,12 @@ def get_receipt(id):
         receipts[id] = receipt
         return receipt
 
+def clear_receipt():
+    receipt_list = receipts.keys()
+    for i in receipt_list:
+        del receipts[i]
+
+
 def save_receipt(receipt):
     receipts[receipt.get_id()] = receipt
     print(receipt.get_id())

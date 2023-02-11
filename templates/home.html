@@ -18,8 +18,8 @@
         <td>{{ product.get_name() }}</td>
         <td>{{ product.get_stock() }}</td>
         <td> ${{ product.get_price() }}</td>
-        <td><a href="/add_cart/{{product.get_product_id()}}"> Add to Cart </a></td>
-        <td><a href="/add_wishlist/{{product.get_product_id()}}"> Add to Wishlsit </a></td>
+        <td><a class="btn btn-info" href="/add_cart/{{product.get_product_id()}}" role="button"> Add to Cart </a></td>
+        <td><a class="btn btn-warning" href="/add_wishlist/{{product.get_product_id()}}" role="button"> Add to Wishlsit </a></td>
     </tr>
     {% endfor %}
 

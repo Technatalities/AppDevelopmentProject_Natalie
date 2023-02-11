@@ -23,8 +23,8 @@
         <tr>
             <td>{{ wl_item.get_product().get_name() }}</td>
             <td> {{ wl_item.get_product().get_price() }}</td>
-            <td> <a href="/transfer_to_cart/{{wl_item.get_product().get_product_id()}}"> Transfer to Cart </a></td>
-            <td> <a href="/remove_from_wishlist/{{wl_item.get_product().get_product_id()}}"> Remove </a></td>
+            <td> <a class="btn btn-info" href="/transfer_to_cart/{{wl_item.get_product().get_product_id()}}" role="button"> Transfer to Cart </a></td>
+            <td> <a class="btn btn-danger" href="/remove_from_wishlist/{{wl_item.get_product().get_product_id()}}" role="button"> Remove </a></td>
             <td>
 
           </td>

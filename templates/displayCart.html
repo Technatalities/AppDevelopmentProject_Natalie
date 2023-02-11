@@ -25,17 +25,17 @@
         <tr>
             <td>{{ item.get_product().get_name() }}</td>
             <td>
-                <a href="/sub_quantity/{{item.get_product().get_product_id()}}">-</a>
+                <a class="btn btn-primary" href="/sub_quantity/{{item.get_product().get_product_id()}}" role="button">-</a>
                 {{item.get_quantity() }}
-                <a href="/add_quantity/{{item.get_product().get_product_id()}}">+</a>
+                <a class="btn btn-primary" href="/add_quantity/{{item.get_product().get_product_id()}}" role="button">+</a>
             </td>
             <td> ${{ item.get_product().get_price() }}</td>
-            <td> <a href="/remove_from_cart/{{item.get_product().get_product_id()}}"> Remove </a></td>
+            <td> <a class="btn btn-danger" href="/remove_from_cart/{{item.get_product().get_product_id()}}" role="button"> Remove </a></td>
         </tr>
 
         <tr>
             <td> Total Price: {{ tot_price }}</td>
-            <td><a href="/createPayment"> CheckOut</a></td>
+            <td><a class="btn btn-success" href="/makePayment" role="button"> CheckOut</a></td>
           </tr>
       {% endfor %}
     </tbody>

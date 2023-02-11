@@ -1,7 +1,6 @@
-import uuid
+
 class PaymentInfo:
     def __init__(self, first_name, last_name, email, card_no, cvv, expiry_date):
-        self.__payment_id = str(uuid.uuid4())
         self.__first_name = first_name
         self.__last_name = last_name
         self.__email = email

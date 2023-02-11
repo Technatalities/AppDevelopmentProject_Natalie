@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from Cart import *
 from Wishlist import *
 from Receipt import *
-from PaymentForm import *
+from PaymentForm import PaymentForm
 from PaymentInfo import *
 
 app = Flask(__name__)
@@ -13,6 +13,8 @@ app.debug = True
 def home():
     init_products()  # this creates 5 dummy product
     clear_cart()  # this is to clear cart
+    clear_receipt()
+    clear_wishlist()
     product_list = get_products()
     return render_template('home.html', products=product_list)
 
@@ -69,7 +71,6 @@ def display_wishlist(id):
     wishlist = get_wishlist('xxx')
     return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
 
-
 @app.route('/add_wishlist/<string:id>')
 def add_wishlist(id):
     wishlist = get_wishlist('xxx')
@@ -100,7 +101,7 @@ def transfer_to_cart(id):
     return redirect(url_for('display_cart', id="xxx"))
 
 
-@app.route('/createPayment', methods=['GET', 'POST'])
+@app.route('/makePayment', methods=['GET', 'POST'])
 def create_payment():
     payment_form = PaymentForm(request.form)
     if request.method == 'POST' and payment_form.validate():
@@ -108,10 +109,11 @@ def create_payment():
         db = shelve.open('payment_info.db', 'c')
         try:
             payment_info_dict = db['PaymentInfo']
+            payment_id = PaymentInfo.get_payment_id
         except:
             print("Error in retreiving Database.")
 
-        payment_info = PaymentInfo(PaymentInfo.get_payment_id(), payment_form.first_name.data,
+        payment_info = PaymentInfo(payment_id, payment_form.first_name.data,
                                    payment_form.last_name.data,
                                    payment_form.email.data, payment_form.card_no.data,
                                    payment_form.cvv.data, payment_form.expiry_date.data)
