@@ -1,5 +1,6 @@
 import shelve
 
+
 class Cart:
     def __init__(self, id):
         self.__id = id
@@ -71,7 +72,6 @@ class Cart:
             return total_price
 
 
-
 class CartItem:
     def __init__(self, product, quantity):
         self.__product = product
@@ -91,11 +91,14 @@ class CartItem:
 
     def add_count(self):
         self.__quantity = self.__quantity + 1
+
     def sub_count(self):
         self.__quantity = self.__quantity - 1
 
 
 carts = shelve.open('cart')
+
+
 def get_cart(id):
     if id in carts:
         return carts[id]
@@ -109,6 +112,7 @@ def delete_cart(id):
     if id in carts:
         del carts[id]
 
+
 # def del_cart(cart):
 #     carts[cart.get_id()] = cart
 
@@ -116,6 +120,7 @@ def clear_cart():
     list = carts.keys()
     for i in list:
         del carts[i]
+
 
 def save_cart(cart):
     carts[cart.get_id()] = cart
