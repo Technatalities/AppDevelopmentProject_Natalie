@@ -8,7 +8,6 @@ from PaymentInfo import *
 app = Flask(__name__)
 app.debug = True
 
-
 @app.route('/')
 def home():
     init_products()  # this creates 5 dummy product
@@ -52,7 +51,6 @@ def add_quantity(id):
     save_cart(cart)
     return redirect(url_for('display_cart', id="xxx"))
 
-
 @app.route('/sub_quantity/<string:id>')
 def sub_quantity(id):
     cart = get_cart("xxx")
@@ -61,12 +59,10 @@ def sub_quantity(id):
     save_cart(cart)
     return redirect(url_for('display_cart', id="xxx"))
 
-
 @app.route('/displayWishlist/<string:id>')
 def display_wishlist(id):
     wishlist = get_wishlist('xxx')
     return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
-
 
 @app.route('/add_wishlist/<string:id>')
 def add_wishlist(id):
@@ -74,8 +70,7 @@ def add_wishlist(id):
     wl_product = get_product(id)
     wishlist.add_wl_item(wl_product)
     save_wishlist(wishlist)
-    return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
-
+    return redirect(url_for('display_wishlist', id="xxx"))
 
 @app.route('/remove_from_wishlist/<string:id>')
 def remove_from_wishlist(id):
@@ -83,8 +78,7 @@ def remove_from_wishlist(id):
     product = get_product(id)
     wishlist.remove_wl_item(product)
     save_wishlist(wishlist)
-    return render_template('displayWishlist.html', count=wishlist.get_count(), wishlist=wishlist)
-
+    return redirect(url_for('display_wishlist', id="xxx"))
 
 @app.route('/transfer_to_cart/<string:id>')
 def transfer_to_cart(id):
@@ -118,7 +112,6 @@ def create_payment():
         db.close()
         return render_template('PaymentForm.html', form=payment_form)
     return render_template('PaymentForm.html', form=payment_form)
-
 
 if __name__ == '__main__':
     app.run()
