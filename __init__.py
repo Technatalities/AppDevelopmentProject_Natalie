@@ -3,7 +3,7 @@ from Cart import *
 from Wishlist import *
 from Receipt import *
 from PaymentForm import *
-from PaymentInfo import *
+from Payment import *
 
 app = Flask(__name__)
 app.debug = True
@@ -130,22 +130,17 @@ def transfer_to_cart(id):
 def create_payment():
     payment_form = MakePaymentForm(request.form)
     if request.method == 'POST' and payment_form.validate():
-        payment_info_dict = {}
-        db = shelve.open('payment_info.db', 'c')
+        payment_dict = {}
+        db = shelve.open('payment.db', 'c')
 
-        try:
-            payment_info_dict = db['PaymentInfo']
-        except:
-            print("Error in retreiving Database.")
-
-        payment_info = PaymentInfo(payment_form.first_name.data,
-                                   payment_form.last_name.data,
-                                   payment_form.email.data, payment_form.card_no.data,
-                                   payment_form.cvv.data, payment_form.expiry_date.data)
-        payment_info_dict[payment_info.get_payment_id()] = payment_info
-        db['PaymentInfo'] = payment_info_dict
+        payment_info = Payment(payment_form.first_name.data,
+                               payment_form.last_name.data,
+                               payment_form.email.data, payment_form.card_no.data,
+                               payment_form.cvv.data, payment_form.expiry_date.data)
+        payment_dict[payment_info.get_payment_id()] = payment_info
+        db['Payment'] = payment_dict
         db.close()
-        return render_template('PaymentForm.html', form=payment_form)
+        return redirect(url_for('home'))
     return render_template('PaymentForm.html', form=payment_form)
 
 

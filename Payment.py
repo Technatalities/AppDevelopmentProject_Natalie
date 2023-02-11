@@ -1,6 +1,9 @@
+class Payment:
+    count_id = 0
 
-class PaymentInfo:
     def __init__(self, first_name, last_name, email, card_no, cvv, expiry_date):
+        Payment.count_id += 1
+        self.__payment_id = Payment.count_id
         self.__first_name = first_name
         self.__last_name = last_name
         self.__email = email
@@ -10,8 +13,10 @@ class PaymentInfo:
 
     def get_payment_id(self):
         return self.__payment_id
+
     def set_first_name(self, first_name):
         self.__first_name = first_name
+
     def get_fisrt_name(self):
         return self.__first_name
 
