@@ -1,44 +1,47 @@
-import shelve
+import uuid
 class PaymentInfo:
-    def __init__(self, id):
-        self.__id = id
-        self.__payment_info = []
+    def __init__(self, first_name, last_name, email, card_no, cvv, expiry_date):
+        self.__payment_id = str(uuid.uuid4())
+        self.__first_name = first_name
+        self.__last_name = last_name
+        self.__email = email
+        self.__card_no = card_no
+        self.__cvv = cvv
+        self.__expiry_date = expiry_date
 
-    def set_id(self, id):
-        self.__id = id
+    def get_payment_id(self):
+        return self.__payment_id
+    def set_first_name(self, first_name):
+        self.__first_name = first_name
+    def get_fisrt_name(self):
+        return self.__first_name
 
-    def get_id(self):
-        return self.__id
+    def set_last_name(self, last_name):
+        self.__last_name = last_name
 
-    def set_payment_info(self, payment_info):
-        self.__payment_info = payment_info
+    def get_last_name(self):
+        return self.__last_name
 
-    def get_payment_info(self):
-        return self.__payment_info
+    def set_email(self, email):
+        self.__email = email
 
-    def set_payment(self, paymentItem):
-        self.__payment_info.append(paymentItem)
+    def get_email(self):
+        return self.__email
 
-class PaymentItem:
-    def __init__(self, payment_info_data):
-        self.__payment_info_data = payment_info_data
+    def set_card_no(self, card_no):
+        self.__card_no = card_no
 
-    def set_payment_info_data(self, payment_info_data):
-        self.__payment_info_data = payment_info_data
+    def get_card_no(self):
+        return self.__card_no
 
-    def get_ppayment_info_data(self):
-        return self.__payment_info_data
+    def set_cvv(self, cvv):
+        self.__cvv = cvv
 
-paymentinfo = shelve.open('payment')
-def get_payment(id):
-    if id in paymentinfo:
-        return paymentinfo[id]
-    else:
-        payment = PaymentInfo(id)
-        paymentinfo[id] = payment
-        return payment
+    def get_cvv(self):
+        return self.__cvv
 
-def save_payment_info(payment):
-    paymentinfo[payment.get_id()] = payment
-    print(payment.get_id())
-    print(payment.get_items())
+    def set_expiry_date(self, expiry_date):
+        self.__expiry_date = expiry_date
+
+    def get_expiry_date(self):
+        return self.__expiry_date

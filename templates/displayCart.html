@@ -32,8 +32,9 @@
             <td> <a href="/remove_from_cart/{{item.get_product().get_product_id()}}"> Remove </a></td>
         </tr>
 
-          <tr>
+        <tr>
             <td> Total Price: {{ tot_price }}</td>
+            <td><a href="/createPayment"> CheckOut</a></td>
           </tr>
       {% endfor %}
     </tbody>
