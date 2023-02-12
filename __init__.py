@@ -13,7 +13,6 @@ app.debug = True
 @app.route('/')
 def home():
     init_products()
-    clear_cart()
     clear_receipt()
     clear_wishlist()
     product_list = get_products()

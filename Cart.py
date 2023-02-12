@@ -55,19 +55,19 @@ class Cart:
     def sub_quantity(self, product):
         found = False
         for item in self.__items:
-            if item.get_quantity() == 1:
-                if item.get_product().get_product_id() == product.get_product_id():
+            if item.get_product().get_product_id() == product.get_product_id():
+                if item.get_quantity() == 1:
                     self.__items.remove(item)
                     found = True
-            if item.get_product().get_product_id() == product.get_product_id():
-                item.sub_count()
-                found = True
+                elif item.get_quantity()>=1:
+                    item.sub_count()
+                    found = True
             if not found:
-                print("Product not found in Cart.")
+                return "Failure"
 
     def calc_total_price(self):
+        total_price = 0
         for item in self.__items:
-            total_price = 0
             total_price += item.get_product().get_price() * item.get_quantity()
             return total_price
 
