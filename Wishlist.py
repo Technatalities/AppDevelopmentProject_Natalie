@@ -1,4 +1,3 @@
-from Product import *
 import shelve
 class Wishlist:
     def __init__(self, id):

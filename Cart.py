@@ -118,5 +118,3 @@ def clear_cart():
 
 def save_cart(cart):
     carts[cart.get_id()] = cart
-    print(cart.get_id())
-    print(cart.get_items())

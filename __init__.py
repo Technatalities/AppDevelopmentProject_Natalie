@@ -12,8 +12,8 @@ app.debug = True
 
 @app.route('/')
 def home():
-    init_products()  # this creates 5 dummy product
-    clear_cart()  # this is to clear cart
+    init_products()
+    clear_cart()
     clear_receipt()
     clear_wishlist()
     product_list = get_products()
