@@ -138,7 +138,6 @@ def create_payment():
         quantity = item.get_quantity()
         new_stock = int(old_stock) - int(quantity)
         product.set_stock(new_stock)
-        print(new_stock)
     payment_form = MakePaymentForm(request.form)
     if request.method == 'POST' and payment_form.validate():
         payment_dict = {}
