@@ -25,9 +25,9 @@ def display_cart(id):
     cart = get_cart('xxx')
     receipt = get_receipt('xxx')
     receipt.add_to_receipt(cart.get_items())
-    receipt.add_to_receipt_history(receipt.get_receipt())
-    save_receipt(receipt)
+    receipt.add_to_receipt_history(cart.get_items)
     tot_price = cart.calc_total_price()
+    save_receipt(receipt)
     return render_template('displayCart.html', count=cart.get_count(), cart=cart, tot_price=tot_price)
 
 
