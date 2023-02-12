@@ -156,5 +156,9 @@ def create_payment():
         return redirect(url_for('home'))
     return render_template('PaymentForm.html', form=payment_form, cart=cart, tot_price=tot_price)
 
+@app.route('/landingPage')
+def landing_page():
+    return render_template('landingPage.html')
+
 if __name__ == '__main__':
     app.run()
