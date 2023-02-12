@@ -55,31 +55,42 @@ class Product:
         self.__picture = picture
 
 # key - product id, value - product object
-products = shelve.open('product')
+
 
 def create_product(product):
+    products = shelve.open('product')
     # this function does not check for existing product
     products[product.get_product_id()] = product
+    products.close()
 
 def get_product(id):
+    products = shelve.open('product')
     if id in products:
         return products[id]
+    products.close()
 
 def get_products():
+    products = shelve.open('product')
     # return a list of products
     key_list = list(products.keys())
     x = []
     for i in key_list:
         x.append(products[i])
+    products.close()
     return x
 
+
 def clear_products():
+    products = shelve.open('product')
     key_list = list(products.keys())
     x = []
     for i in key_list:
         del products[i]
+    products.close()
 
 def init_products():
+    products = shelve.open('product')
     for i in range(1,5):
         p = Product("p"+str(i), 10, "cat"+str(i), 1.5+i, 5, "")
         create_product(p)
+    products.close()

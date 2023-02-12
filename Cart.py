@@ -50,7 +50,7 @@ class Cart:
                 item.add_count()
                 found = True
         if not found:
-            print("Product not found in Cart.")
+            return False
 
     def sub_quantity(self, product):
         found = False
@@ -59,17 +59,17 @@ class Cart:
                 if item.get_quantity() == 1:
                     self.__items.remove(item)
                     found = True
-                elif item.get_quantity()>=1:
+                elif item.get_quantity() >= 1:
                     item.sub_count()
                     found = True
-            if not found:
-                return "Failure"
+        if not found:
+            return False
 
     def calc_total_price(self):
         total_price = 0
         for item in self.__items:
             total_price += item.get_product().get_price() * item.get_quantity()
-            return total_price
+        return total_price
 
 class CartItem:
     def __init__(self, product, quantity):
@@ -95,26 +95,31 @@ class CartItem:
         self.__quantity = self.__quantity - 1
 
 
-carts = shelve.open('cart')
-
-
 def get_cart(id):
+    carts = shelve.open('cart')
     if id in carts:
         return carts[id]
     else:
         cart = Cart(id)
         carts[id] = cart
         return cart
+    carts.close()
 
 
 def delete_cart(id):
+    carts = shelve.open('cart')
     if id in carts:
         del carts[id]
+    carts.close()
 
 def clear_cart():
+    carts = shelve.open('cart')
     list = carts.keys()
     for i in list:
         del carts[i]
+    carts.close()
 
 def save_cart(cart):
+    carts = shelve.open('cart')
     carts[cart.get_id()] = cart
+    carts.close()

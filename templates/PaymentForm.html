@@ -21,13 +21,12 @@
                 <td>{{item.get_quantity() }}</td>
                 <td> ${{ item.get_product().get_price() }}</td>
             </tr>
-
-            <tr>
-                <th> Total Price:</th>
-                <td></td>
-                <td>${{ tot_price }}</td>
-              </tr>
           {% endfor %}
+          <tr>
+            <th> Total Price:</th>
+            <td></td>
+            <td>${{ tot_price }}</td>
+          </tr>
         </tbody>
       </table>
   </div>

@@ -5,10 +5,10 @@
 <h1 class="display-4 text-center">Cart</h1>
 <div>
     {% if count == 0 %}
-    <p class="text-center">There are no products in your cart.</p>
+    <p class="text-center">There are no <a href="/">products</a> in your cart. </p>
     <p class="text-center"> Browse our catalog to add items. </p>
     {% else %}
-    <p class="text-center">There are {{ count }} Products in your Cart.</p>
+    <p class="text-center">There are {{ count }} <a href="/">Products</a> in your Cart.</p>
 
     <div class="d-flex justify-content-center">
         <table class="table table-hover" style="width: 80vw;background-color:rgb(232, 241, 255)">
